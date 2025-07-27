@@ -1,3 +1,6 @@
+@import './external-styles.css';
+
+/* Your existing global styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

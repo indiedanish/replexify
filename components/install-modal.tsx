@@ -52,7 +52,7 @@ export default function InstallModal({ isOpen, onClose }: InstallModalProps) {
       id: "gmail",
       name: "Gmail",
       command: "Connect your Gmail account to start automating email support",
-      deeplink: "https://app.replixy.com/connect/gmail",
+      deeplink: "/register",
     },
     {
       id: "slack",

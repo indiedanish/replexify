@@ -4,7 +4,9 @@ import type { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
+import { Toaster } from "sonner"
 import { organizationSchema, faqSchema, videoSchemas } from "@/lib/structured-data"
+import { AuthProvider } from "@/lib/contexts/auth-context"
 
 export const metadata: Metadata = {
   title: "Replexify – AI Customer Support Automation | Instant Replies with Your Brand Voice",
@@ -106,39 +108,43 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="antialiased">
-        <div className="relative min-h-screen bg-black text-white">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem={false}
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </div>
+        <AuthProvider>
+          <div className="relative min-h-screen bg-black text-white">
 
-        {/* Structured Data Scripts */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqSchema),
-          }}
-        />
-        {videoSchemas.map((schema, index) => (
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem={false}
+              disableTransitionOnChange
+            >
+              <Toaster />
+              {children}
+            </ThemeProvider>
+          </div>
+
+          {/* Structured Data Scripts */}
           <script
-            key={index}
             type="application/ld+json"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(schema),
+              __html: JSON.stringify(organizationSchema),
             }}
           />
-        ))}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(faqSchema),
+            }}
+          />
+          {videoSchemas.map((schema, index) => (
+            <script
+              key={index}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify(schema),
+              }}
+            />
+          ))}
+        </AuthProvider>
       </body>
     </html>
   )

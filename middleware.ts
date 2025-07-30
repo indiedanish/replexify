@@ -14,21 +14,21 @@ export function middleware(request: NextRequest) {
   console.log("All cookies:", request.cookies.getAll());
   console.log("========================");
 
-  // Check if the path starts with /dashboard
-  if (path.startsWith("/dashboard")) {
-    // Check if user is authenticated (you can modify this based on your auth strategy)
-    const isAuthenticated = checkAuthentication(request);
+  // // Check if the path starts with /dashboard
+  // if (path.startsWith("/dashboard")) {
+  //   // Check if user is authenticated (you can modify this based on your auth strategy)
+  //   const isAuthenticated = checkAuthentication(request);
 
-    console.log("request", request.cookies, request.cookies.get("AccessToken"));
+  //   console.log("request", request.cookies, request.cookies.get("AccessToken"));
 
-    console.log("isAuthenticated", isAuthenticated);
+  //   console.log("isAuthenticated", isAuthenticated);
 
-    if (!isAuthenticated) {
-      // Redirect to login page if not authenticated
-      const loginUrl = new URL("/login", request.url);
-      return NextResponse.redirect(loginUrl);
-    }
-  }
+  //   if (!isAuthenticated) {
+  //     // Redirect to login page if not authenticated
+  //     const loginUrl = new URL("/login", request.url);
+  //     return NextResponse.redirect(loginUrl);
+  //   }
+  // }
 
   return NextResponse.next();
 }

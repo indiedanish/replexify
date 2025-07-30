@@ -16,6 +16,7 @@ import { loginUser } from "@/lib/services/auth"
 import { useAuth } from "@/lib/contexts/auth-context"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import PublicRoute from "@/components/auth/public-route"
 
 // Login form schema
 const loginSchema = {
@@ -71,6 +72,7 @@ export default function LoginPage() {
     }
 
     return (
+        <PublicRoute>
         <div className="min-h-screen bg-black text-white font-geist">
             {/* Navigation */}
             <Navbar isBannerVisible={false} />
@@ -286,5 +288,6 @@ export default function LoginPage() {
                 </section>
             </div>
         </div>
+        </PublicRoute>
     )
 }

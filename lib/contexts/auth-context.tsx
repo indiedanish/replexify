@@ -53,7 +53,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log("AuthContext: Initializing...");
         refreshUser().finally(() => {
             console.log("AuthContext: Finished loading");
-            router.push('/dashboard')
             setIsLoading(false)
         })
     }, [])

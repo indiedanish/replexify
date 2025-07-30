@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { UserProfile, getCurrentUser, logoutUser } from '@/lib/services/auth'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation' 
 
 interface AuthContextType {
     user: UserProfile | null
@@ -18,7 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<UserProfile | null>(null)
     const [isLoading, setIsLoading] = useState(true)
-
+    const router = useRouter()
     const login = (userData: UserProfile) => {
         console.log("AuthContext: Setting user", userData);
         setUser(userData);
@@ -52,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log("AuthContext: Initializing...");
         refreshUser().finally(() => {
             console.log("AuthContext: Finished loading");
+            router.push('/dashboard')
             setIsLoading(false)
         })
     }, [])

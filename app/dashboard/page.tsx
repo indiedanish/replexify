@@ -4,6 +4,9 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import ProtectedRoute from '@/components/auth/protected-route';
+import { useAuth } from '@/lib/contexts/auth-context';
+
 import {
     BarChart3,
     Users,
@@ -99,7 +102,14 @@ const platformStats = [
 export default function DashboardPage() {
     const [selectedPeriod, setSelectedPeriod] = useState("7d")
 
+    const { user } = useAuth();
+
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+
     return (
+        <ProtectedRoute>
         <div className="min-h-screen bg-black text-white font-geist">
             {/* Header */}
             <div className="border-b border-white/10 bg-black/50 backdrop-blur-sm">
@@ -281,5 +291,6 @@ export default function DashboardPage() {
                 </div>
             </div>
         </div>
+        </ProtectedRoute>
     )
 }

@@ -9,6 +9,10 @@ export function middleware(request: NextRequest) {
   if (path.startsWith('/dashboard')) {
     // Check if user is authenticated (you can modify this based on your auth strategy)
     const isAuthenticated = checkAuthentication(request)
+
+    console.log('request',request.cookies , request.cookies.get('AccessToken'))
+
+    console.log('isAuthenticated', isAuthenticated)
     
     if (!isAuthenticated) {
       // Redirect to login page if not authenticated

@@ -19,23 +19,34 @@ export default function ProtectedRoute({
   const { user, isLoading } = useAuth();
   const [isChecking, setIsChecking] = useState(true);
 
+  console.log("ProtectedRoute: user =", user);
+  console.log("ProtectedRoute: isLoading =", isLoading);
+  console.log("ProtectedRoute: isChecking =", isChecking);
+
   useEffect(() => {
+    console.log("ProtectedRoute useEffect: user =", user, "isLoading =", isLoading);
+
     if (!isLoading) {
       if (!user) {
+        console.log("ProtectedRoute: No user, redirecting to login");
         router.push('/login');
       } else {
+        console.log("ProtectedRoute: User found, setting isChecking to false");
         setIsChecking(false);
       }
     }
   }, [user, isLoading, router]);
 
   if (isLoading || isChecking) {
+    console.log("ProtectedRoute: Showing loading spinner");
     return <LoadingSpinner />;
   }
 
   if (!user) {
+    console.log("ProtectedRoute: No user, returning null");
     return null; // Will redirect to login
   }
 
+  console.log("ProtectedRoute: Rendering children");
   return <>{children}</>;
 }

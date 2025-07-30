@@ -1,33 +1,41 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { ProtectedRoute } from "@/components/auth/protected-route"
+'use client';
 
-export default function ProtectedRoute({ children, fallback }: ProtectedRouteProps) {
-  // ...component code...
+import LoadingSpinner from '../ui/loading-spinner';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/contexts/auth-context';
+
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
-// Function to check authentication status
-function checkAuthentication(request: NextRequest): boolean {
-  // Check for access token cookie
-  const accessToken = request.cookies.get('AccessToken')
+export default function ProtectedRoute({
+  children,
+  fallback = <div className="flex items-center justify-center min-h-screen">Loading...</div>
+}: ProtectedRouteProps) {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
+  const [isChecking, setIsChecking] = useState(true);
 
-  // You can also check for other authentication methods here
-  // For example, check for a session token, JWT token, etc.
+  useEffect(() => {
+    if (!isLoading) {
+      if (!user) {
+        router.push('/login');
+      } else {
+        setIsChecking(false);
+      }
+    }
+  }, [user, isLoading, router]);
 
-  return !!accessToken
-}
+  if (isLoading || isChecking) {
+    return <LoadingSpinner />;
+  }
 
-// Configure which routes to run middleware on
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
-  ],
+  if (!user) {
+    return null; // Will redirect to login
+  }
+
+  return <>{children}</>;
 }

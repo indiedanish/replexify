@@ -102,11 +102,6 @@ const platformStats = [
 export default function DashboardPage() {
     const [selectedPeriod, setSelectedPeriod] = useState("7d")
 
-    const { user } = useAuth();
-
-    if (!user) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <ProtectedRoute>

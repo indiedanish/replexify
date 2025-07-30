@@ -5,6 +5,15 @@ export function middleware(request: NextRequest) {
   // Get the pathname of the request
   const path = request.nextUrl.pathname;
 
+  // Add this debug logging
+  console.log("=== MIDDLEWARE DEBUG ===");
+  console.log("Path:", path);
+  console.log("URL:", request.url);
+  console.log("Headers:", Object.fromEntries(request.headers.entries()));
+  console.log("Cookie header:", request.headers.get("cookie"));
+  console.log("All cookies:", request.cookies.getAll());
+  console.log("========================");
+
   // Check if the path starts with /dashboard
   if (path.startsWith("/dashboard")) {
     // Check if user is authenticated (you can modify this based on your auth strategy)

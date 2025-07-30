@@ -1,40 +1,42 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   // Get the pathname of the request
-  const path = request.nextUrl.pathname
+  const path = request.nextUrl.pathname;
 
   // Check if the path starts with /dashboard
-  if (path.startsWith('/dashboard')) {
+  if (path.startsWith("/dashboard")) {
     // Check if user is authenticated (you can modify this based on your auth strategy)
-    const isAuthenticated = checkAuthentication(request)
+    const isAuthenticated = checkAuthentication(request);
 
-    console.log('request',request.cookies , request.cookies.get('AccessToken'))
+    console.log("request", request.cookies, request.cookies.get("AccessToken"));
 
-    console.log('isAuthenticated', isAuthenticated)
-    
+    console.log("isAuthenticated", isAuthenticated);
+
     if (!isAuthenticated) {
       // Redirect to login page if not authenticated
-      const loginUrl = new URL('/login', request.url)
-      return NextResponse.redirect(loginUrl)
+      const loginUrl = new URL("/login", request.url);
+      return NextResponse.redirect(loginUrl);
     }
   }
 
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
 // Function to check authentication status
 function checkAuthentication(request: NextRequest): boolean {
-  // Check for access token cookie
-  const accessToken = request.cookies.get('AccessToken')
+  // Check for access token cookie - use the correct cookie name
+  const accessToken =
+    request.cookies.get("auth-token") || request.cookies.get("AccessToken");
 
-  console.log('accessToken', accessToken)
-  
+  console.log("accessToken", accessToken);
+  console.log("All cookies:", request.cookies.getAll());
+
   // You can also check for other authentication methods here
   // For example, check for a session token, JWT token, etc.
-  
-  return !!accessToken
+
+  return !!accessToken;
 }
 
 // Configure which routes to run middleware on
@@ -48,6 +50,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public folder
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
   ],
-}
+};

@@ -24,6 +24,8 @@ export function middleware(request: NextRequest) {
 function checkAuthentication(request: NextRequest): boolean {
   // Check for access token cookie
   const accessToken = request.cookies.get('AccessToken')
+
+  console.log('accessToken', accessToken)
   
   // You can also check for other authentication methods here
   // For example, check for a session token, JWT token, etc.

@@ -2,6 +2,7 @@
 
 import { useState, createContext, useContext } from "react"
 import Sidebar from "@/components/dashboard/sidebar"
+import ProtectedRoute from '@/components/auth/protected-route';
 
 // Create context for sidebar state
 const SidebarContext = createContext<{
@@ -22,6 +23,7 @@ export default function DashboardLayout({
   const [collapsed, setCollapsed] = useState(false)
 
   return (
+    <ProtectedRoute>
     <SidebarContext.Provider value={{ collapsed, setCollapsed }}>
       <div className="min-h-screen bg-black">
         <Sidebar />
@@ -30,5 +32,6 @@ export default function DashboardLayout({
         </div>
       </div>
     </SidebarContext.Provider>
+    </ProtectedRoute>
   )
 }

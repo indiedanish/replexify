@@ -21,6 +21,8 @@ import { ENDPOINTS } from "@/config/endpoints"
 import { verifyOtp } from "@/lib/services/auth"
 import { useAuth } from "@/lib/contexts/auth-context"
 import { useRouter } from "next/navigation"
+import PublicRoute from "@/components/auth/public-route"
+
 
 export interface OtpVerifyResponse {
     id: number
@@ -103,6 +105,9 @@ export default function RegisterPage() {
     }
 
     return (
+        <PublicRoute>
+
+        
         <div className="min-h-screen bg-black text-white font-geist">
             {/* Navigation */}
             <Navbar isBannerVisible={false} />
@@ -425,5 +430,6 @@ export default function RegisterPage() {
                 onOtpVerified={handleOtpVerified}
             />
         </div>
+        </PublicRoute>
     )
 }

@@ -15,6 +15,7 @@ import TestimonialsSection from "@/components/testimonials-section"
 import VibeCodingTweetsSection from "@/components/vibe-coding-tweets-section"
 import { useState } from "react"
 import AnnouncementBanner from "@/components/announcement-banner"
+import PublicRoute from "@/components/auth/public-route"
 
 // Direct Vercel Blob URLs for videos
 const VIDEO_URLS = {
@@ -32,6 +33,7 @@ export default function Home() {
   }
 
   return (
+    <PublicRoute>
     <div
       className={`min-h-screen bg-black text-white font-geist transition-all duration-300 ${isBannerVisible ? "pt-[108px] sm:pt-28" : "pt-20"}`}
     >
@@ -418,6 +420,7 @@ export default function Home() {
 
       <InstallModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
+    </PublicRoute>
   )
 }
 

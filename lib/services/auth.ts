@@ -187,14 +187,19 @@ export const resendOtp = async (email: string): Promise<ResendOtpResponse> => {
 // Get current user profile - Uses the access token cookie
 export const getCurrentUser = async (): Promise<UserProfile | null> => {
   try {
+    console.log(
+      "getCurrentUser: Making request to",
+      `${process.env.NEXT_PUBLIC_API_URL}/auth`
+    );
     const response = await apiClient.get<UserProfile>("/auth");
+    console.log("getCurrentUser: Response", response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
-      // User is not authenticated
+      console.log("getCurrentUser: User not authenticated (401)");
       return null;
     }
-    console.error("Get current user error:", error);
+    console.error("getCurrentUser: Error", error);
     return null;
   }
 };

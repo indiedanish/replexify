@@ -20,7 +20,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoading, setIsLoading] = useState(true)
 
     const login = (userData: UserProfile) => {
-        setUser(userData)
+        console.log("AuthContext: Setting user", userData);
+        setUser(userData);
     }
 
     const logout = async () => {
@@ -37,17 +38,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const refreshUser = async () => {
         try {
+            console.log("AuthContext: Checking authentication...");
             const userData = await getCurrentUser()
+            console.log("AuthContext: getCurrentUser result", userData);
             setUser(userData)
         } catch (error) {
-            console.error('Failed to get current user:', error)
+            console.error('AuthContext: Failed to get current user:', error)
             setUser(null)
         }
     }
 
     useEffect(() => {
-        // Check authentication status on app load
+        console.log("AuthContext: Initializing...");
         refreshUser().finally(() => {
+            console.log("AuthContext: Finished loading");
             setIsLoading(false)
         })
     }, [])

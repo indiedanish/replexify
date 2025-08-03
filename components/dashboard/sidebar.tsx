@@ -21,8 +21,8 @@ import { useSidebar } from "@/app/dashboard/layout"
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Upload Context', href: '/upload-context', icon: Zap },
     { name: 'Conversations', href: '/dashboard/conversations', icon: MessageSquare },
-    { name: 'Automation', href: '/dashboard/automation', icon: Zap },
     { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
     { name: 'Users', href: '/dashboard/users', icon: Users },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },

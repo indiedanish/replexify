@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 import { useAuth } from '@/lib/contexts/auth-context';
 import { uploadContext, getContexts, deleteContext, ContextItem } from '@/lib/services/content-context';
@@ -222,23 +223,35 @@ export default function UploadContextPage() {
                         </div>
 
                         {/* Upload Method Toggle */}
-                        <div className="flex space-x-4">
-                            <Button
-                                variant={uploadMethod === "files" ? "default" : "outline"}
-                                onClick={() => setUploadMethod("files")}
-                                className={uploadMethod === "files" ? "bg-white text-black" : "border-white/20 text-white hover:bg-white/10"}
+                        <div>
+                            <label className="text-white/80 text-sm font-medium mb-2 block">
+                                Upload Method
+                            </label>
+                            <ToggleGroup
+                                type="single"
+                                value={uploadMethod}
+                                onValueChange={(value) => value && setUploadMethod(value as "files" | "text")}
+                                className="justify-start"
                             >
-                                <File className="h-4 w-4 mr-2" />
-                                Upload Files
-                            </Button>
-                            <Button
-                                variant={uploadMethod === "text" ? "default" : "outline"}
-                                onClick={() => setUploadMethod("text")}
-                                className={uploadMethod === "text" ? "bg-white text-black" : "border-white/20 text-white hover:bg-white/10"}
-                            >
-                                <FileText className="h-4 w-4 mr-2" />
-                                Text Content
-                            </Button>
+                                <div className="bg-white/5 border border-white/20 rounded-lg p-1">
+
+                                
+                                <ToggleGroupItem
+                                    value="files"
+                                    className="data-[state=on]:bg-white data-[state=on]:text-black text-white hover:bg-white/10"
+                                >
+                                    <File className="h-4 w-4 mr-2" />
+                                    Upload Files
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value="text"
+                                    className="data-[state=on]:bg-white data-[state=on]:text-black text-white hover:bg-white/10"
+                                >
+                                    <FileText className="h-4 w-4 mr-2" />
+                                    Text Content
+                                </ToggleGroupItem>
+                                </div>
+                            </ToggleGroup>
                         </div>
 
                         {/* File Upload */}

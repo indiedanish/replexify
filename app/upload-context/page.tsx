@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "sonner"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 import { useAuth } from '@/lib/contexts/auth-context';
@@ -26,7 +26,6 @@ import {
 
 export default function UploadContextPage() {
     const { user } = useAuth();
-    const { toast } = useToast();
 
     const [contexts, setContexts] = useState<ContextItem[]>([]);
     const [loading, setLoading] = useState(false);
@@ -51,11 +50,7 @@ export default function UploadContextPage() {
             setContexts(response || []);
         } catch (error) {
             console.error("Error loading contexts:", error);
-            toast({
-                title: "Error",
-                description: "Failed to load contexts",
-                variant: "destructive",
-            });
+            toast.error("Failed to load contexts");
             // Set empty array on error to prevent undefined issues
             setContexts([]);
         } finally {
@@ -66,11 +61,7 @@ export default function UploadContextPage() {
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(event.target.files || []);
         if (files.length > 10) {
-            toast({
-                title: "Too many files",
-                description: "Maximum 10 files allowed",
-                variant: "destructive",
-            });
+            toast.error("Maximum 10 files allowed");
             return;
         }
         setSelectedFiles(files);
@@ -78,29 +69,17 @@ export default function UploadContextPage() {
 
     const handleUpload = async () => {
         if (!contextName.trim()) {
-            toast({
-                title: "Error",
-                description: "Context name is required",
-                variant: "destructive",
-            });
+            toast.error("Context name is required");
             return;
         }
 
         if (uploadMethod === "files" && selectedFiles.length === 0) {
-            toast({
-                title: "Error",
-                description: "Please select at least one file",
-                variant: "destructive",
-            });
+            toast.error("Please select at least one file");
             return;
         }
 
         if (uploadMethod === "text" && !contextText.trim()) {
-            toast({
-                title: "Error",
-                description: "Please enter some text content",
-                variant: "destructive",
-            });
+            toast.error("Please enter some text content");
             return;
         }
 
@@ -114,10 +93,7 @@ export default function UploadContextPage() {
 
             await uploadContext(uploadData);
 
-            toast({
-                title: "Success",
-                description: "Context uploaded successfully",
-            });
+            toast.success("Context uploaded successfully");
 
             // Reset form
             setContextName("");
@@ -130,11 +106,7 @@ export default function UploadContextPage() {
             // Reload contexts
             await loadContexts();
         } catch (error) {
-            toast({
-                title: "Error",
-                description: error instanceof Error ? error.message : "Upload failed",
-                variant: "destructive",
-            });
+            toast.error(error instanceof Error ? error.message : "Upload failed");
         } finally {
             setUploading(false);
         }
@@ -143,17 +115,10 @@ export default function UploadContextPage() {
     const handleDeleteContext = async (contextId: number) => {
         try {
             await deleteContext(contextId.toString());
-            toast({
-                title: "Success",
-                description: "Context deleted successfully",
-            });
+            toast.success("Context deleted successfully");
             await loadContexts();
         } catch (error) {
-            toast({
-                title: "Error",
-                description: "Failed to delete context",
-                variant: "destructive",
-            });
+            toast.error("Failed to delete context");
         }
     };
 
@@ -235,21 +200,21 @@ export default function UploadContextPage() {
                             >
                                 <div className="bg-white/5 border border-white/20 rounded-lg p-1">
 
-                                
-                                <ToggleGroupItem
-                                    value="files"
-                                    className="data-[state=on]:bg-white data-[state=on]:text-black text-white hover:bg-white/10"
-                                >
-                                    <File className="h-4 w-4 mr-2" />
-                                    Upload Files
-                                </ToggleGroupItem>
-                                <ToggleGroupItem
-                                    value="text"
-                                    className="data-[state=on]:bg-white data-[state=on]:text-black text-white hover:bg-white/10"
-                                >
-                                    <FileText className="h-4 w-4 mr-2" />
-                                    Text Content
-                                </ToggleGroupItem>
+
+                                    <ToggleGroupItem
+                                        value="files"
+                                        className="data-[state=on]:bg-white data-[state=on]:text-black text-white hover:bg-white/10"
+                                    >
+                                        <File className="h-4 w-4 mr-2" />
+                                        Upload Files
+                                    </ToggleGroupItem>
+                                    <ToggleGroupItem
+                                        value="text"
+                                        className="data-[state=on]:bg-white data-[state=on]:text-black text-white hover:bg-white/10"
+                                    >
+                                        <FileText className="h-4 w-4 mr-2" />
+                                        Text Content
+                                    </ToggleGroupItem>
                                 </div>
                             </ToggleGroup>
                         </div>

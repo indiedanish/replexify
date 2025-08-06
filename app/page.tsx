@@ -402,15 +402,15 @@ export default function Home() {
           </div>
         </section>
 
-        <SaveReviewRestoreSection onOpenInstall={openInstallModal} />
-        <AgenticAISearchSection onOpenInstall={openInstallModal} />
-        <FeatureVideoSection
+        {/* <SaveReviewRestoreSection onOpenInstall={openInstallModal} /> */}
+        {/* <AgenticAISearchSection onOpenInstall={openInstallModal} /> */}
+        {/* <FeatureVideoSection
           title="Multi-Channel AI Support Automation"
           description="Seamlessly handle customer inquiries across email, chat, and helpdesk platforms with consistent brand voice."
           videoSrc="/videos/cross-ides.mp4"
           fallbackVideoSrc={VIDEO_URLS.crossIde}
           gradientClass="gradient-yellow-red-diagonal"
-        />
+        /> */}
         <WhyNotGitSection onOpenInstall={openInstallModal} />
         {/* <VibeCodingTweetsSection onOpenInstall={openInstallModal} /> */}
         <TestimonialsSection />
